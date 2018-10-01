@@ -19,7 +19,36 @@ library(dplyr)
 NYC_Subway <- read_csv("data /NYC_Subway.csv") %>%
   janitor::clean_names() %>%
   select(-division, -exit_only, -staffing, -staff_hours, -free_crossover, -north_south_street, -east_west_street, -corner, -station_location, -entrance_location, -entrance_longitude, -entrance_latitude) %>%
-  mutate(entry =recode(entry, "YES" = TRUE, "NO" = FALSE))
-## There are totally 20 variables in this data set. Retain line, statation name, station longitude/latitude, route1~11, entrance type, entry, vending and ADA compliance. Step 1 is change the capital letter to lower case. Step 2 is remove all the unwanted columns. Step 3 is change the entry variable (YES or NO) to logical variable (TRUE or FLASE) 
+  mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE)) 
+```
+There are totally 20 variables in this data set. Retain line, statation name, station longitude/latitude, route1~11, entrance type, entry, vending and ADA compliance. Step 1 is change the capital letter to lower case. Step 2 is remove all the unwanted columns. Step 3 is change the entry variable (YES or NO) to logical variable (TRUE or FLASE). The data is not tidy yet. 
+```{r}
+ #. keep_all = TRUE keep all other data 
+distinct_station = distinct(NYC_Subway, station_name, line, route1, .keep_all = TRUE) 
+   dim(distinct_station)
+ADA_compliant = filter(distinct_station, ada == TRUE)
+   dim(ADA_compliant)
+Without_vending = filter(distinct_station, vending == "NO", entry == TRUE)
+   dim(Without_vending)
+Without_vending_no = filter(distinct_station, vending == "NO")
+   dim(Without_vending_no)
+```
+There are totally 450 distinct stations both by name and by line. 
+There are totally 75 stations are ADA compliant. 
+The proportion is 5/9 = 55.6%
+```{r}
+reformat_data = gather(NYC_Subway, key = route_number, value =route_name, route1:route11 )
+   distinct_AA = distinct(reformat_data, station_name, line, route_name, .keep_all = TRUE) 
+   distinct_A = filter(distinct_AA, route_name == "A")
+   dim(distinct_A) 
+ADA = filter(distinct_A, ada == TRUE)
+   dim(ADA) 
+```
+There are totally 60 stations. 
+There are 17 ADA compliant.
+
+#Question 2 
+```{r}
+
 ```
 
