@@ -9,3 +9,17 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+#Question 1 
+```{r}
+NYC_Subway <- read_csv("data /NYC_Subway.csv") %>%
+  janitor::clean_names() %>%
+  select(-division, -exit_only, -staffing, -staff_hours, -free_crossover, -north_south_street, -east_west_street, -corner, -station_location, -entrance_location, -entrance_longitude, -entrance_latitude) %>%
+  mutate(entry =recode(entry, "YES" = TRUE, "NO" = FALSE))
+## There are totally 20 variables in this data set. Retain line, statation name, station longitude/latitude, route1~11, entrance type, entry, vending and ADA compliance. Step 1 is change the capital letter to lower case. Step 2 is remove all the unwanted columns. Step 3 is change the entry variable (YES or NO) to logical variable (TRUE or FLASE) 
+```
+
