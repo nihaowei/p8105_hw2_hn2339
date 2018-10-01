@@ -75,3 +75,13 @@ The dimension of the Mr_TrashWheel is `r dim(Mr_TrashWheel)`. There are total 14
 The dimension of the Precipation is `r dim(Precipation)` There are total 3 variables. Month, total precipation and year. 
 The median number of sports balls in a dumpster in 2016 is `r median(Mr_2016$sports_balls)`
 The total precipation in 2017 is `r sum(P2017$total)`
+#Question 3 
+```{r}
+# install.packages("devtools")
+devtools::install_github("p8105/p8105.datasets")
+library(p8105.datasets)
+BRFSS = data("brfss_smart2010") 
+  BRFSS_2010 = janitor::clean_names(BRFSS)
+
+```
+
