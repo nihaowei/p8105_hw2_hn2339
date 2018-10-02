@@ -79,9 +79,31 @@ The total precipation in 2017 is `r sum(P2017$total)`
 ```{r}
 # install.packages("devtools")
 devtools::install_github("p8105/p8105.datasets")
-library(p8105.datasets)
-BRFSS = data("brfss_smart2010") 
-  BRFSS_2010 = janitor::clean_names(BRFSS)
+```
 
+```{r}
+library(p8105.datasets)
+    data(brfss_smart2010) 
+    BRFSS = janitor::clean_names(brfss_smart2010) %>%
+    filter(topic == "Overall Health") %>%
+    select(-c(class, topic, question, sample_size, confidence_limit_low:geo_location)) %>%
+    spread(key = response, value = data_value) 
+    Scatter_plot = filter(BRFSS, locationdesc == "NY - New York Country" | locationdesc == "NY - Queens Country")
+    destination = distinct(BRFSS, locationdesc, .keep_all = TRUE) 
+    state = distinct(BRFSS, locationabbr, .keep_all = TRUE)
+    Excellent_2002 = filter(BRFSS, year == "2002") 
+    median(Excellent_2002$Excellent, na.rm = TRUE)
+    ggplot(Excellent_2002, aes(x = Excellent)) +
+      geom_histogram(binwidth = 1)
+    Scatter = filter(BRFSS, locationdesc == "NY - New York County" | locationdesc == "NY - Queens County")
+    ggplot(Scatter, aes(x = year, y = Excellent)) + 
+      geom_point(aes(color = locationdesc), alpha = 0.5)
+```
+The number of unique destination is `r nrow(destination)`. 
+The number of unique state is `r nrow(state)`.
+The median of 2002 excellent is `r median(Excellent_2002$Excellent, na.rm = TRUE)`
+
+```{r}
+Scatter = filter(brfss_smart2010, Locationdesc == "NY - New York County" )
 ```
 
