@@ -91,8 +91,8 @@ library(p8105.datasets)
     Scatter_plot = filter(BRFSS, locationdesc == "NY - New York Country" | locationdesc == "NY - Queens Country")
     destination = distinct(BRFSS, locationdesc, .keep_all = TRUE) 
     state = distinct(BRFSS, locationabbr, .keep_all = TRUE)
-    Excellent_2002 = filter(BRFSS, year == "2002") 
-    median(Excellent_2002$Excellent, na.rm = TRUE)
+    Excellent_2002 = filter(BRFSS, year == "2002") %>%
+    mutate(proportion = Excellent / (Excellent + Fair + Good + Poor))
     ggplot(Excellent_2002, aes(x = Excellent)) +
       geom_histogram(binwidth = 1)
     Scatter = filter(BRFSS, locationdesc == "NY - New York County" | locationdesc == "NY - Queens County")
