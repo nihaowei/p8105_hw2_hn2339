@@ -92,7 +92,7 @@ library(p8105.datasets)
     destination = distinct(BRFSS, locationdesc, .keep_all = TRUE) 
     state = distinct(BRFSS, locationabbr, .keep_all = TRUE)
     Excellent_2002 = filter(BRFSS, year == "2002") %>%
-    mutate(proportion = Excellent / (Excellent + Fair + Good + Poor))
+    mutate(proportion = (Excellent + `Very good` ) / (Excellent + Fair + Good + Poor + `Very good`))
     ggplot(Excellent_2002, aes(x = Excellent)) +
       geom_histogram(binwidth = 1)
     Scatter = filter(BRFSS, locationdesc == "NY - New York County" | locationdesc == "NY - Queens County")
@@ -100,7 +100,8 @@ library(p8105.datasets)
       geom_point(aes(color = locationdesc), alpha = 0.5)
 ```
 The number of unique destination is `r nrow(destination)`. 
-The number of unique state is `r nrow(state)`.
+The number of unique state is `r nrow(state)`. So every state is represented. 
+
 The median of 2002 excellent is `r median(Excellent_2002$Excellent, na.rm = TRUE)`
 
 ```{r}
