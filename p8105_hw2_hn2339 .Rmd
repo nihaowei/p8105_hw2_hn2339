@@ -111,7 +111,7 @@ library(p8105.datasets)
     mutate(proportion = (Excellent + `Very good` ) / (Excellent + Fair + Good + Poor + `Very good`))
 #make the histogram 
     ggplot(Excellent_2002, aes(x = Excellent)) +
-      geom_histogram()
+      geom_histogram(binwidth = 1)
 #make the scatterplot 
     Scatter = filter(BRFSS, locationdesc == "NY - New York County" | locationdesc == "NY - Queens County")
     ggplot(Scatter, aes(x = year, y = Excellent)) + 
@@ -121,5 +121,6 @@ The number of unique destination is `r nrow(destination)`.
 The number of unique state is `r nrow(state)`. So every state is represented. 
 The most state which observed most is `r most`. 
 The median of 2002 excellent is `r median(Excellent_2002$Excellent, na.rm = TRUE)`
-
+From the histogram plot we can see that most excellent scores are between 20-30. There is one outlier which has excellent score over 40. The graph is right skewed, which means that the median score is less than the mean. 
+From the scatterplot we can see that excellent score in NY Queens country is lower than NY New York country. All Queens country's scores are below 22.5, on the other hand, New country's scores are above 22.5. The scores are fluctuate between 2002 and 2010 with no increasing or decreasing trend. 
 
