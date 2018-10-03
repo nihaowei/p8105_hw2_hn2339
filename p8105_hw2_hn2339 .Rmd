@@ -25,11 +25,12 @@ NYC_Subway <- read_csv("data /NYC_Subway.csv") %>%
   mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE)) 
 ```
 There are totally 20 variables in this data set. Retain line, statation name, station longitude/latitude, route1~11, entrance type, entry, vending and ADA compliance. Step 1 is change the capital letter to lower case. Step 2 is remove all the unwanted columns. Step 3 is change the entry variable (YES or NO) to logical variable (TRUE or FLASE). The data is not tidy yet. 
+
 ```{r}
  #find the distinct station, . keep_all = TRUE keep all other data 
 distinct_station = distinct(NYC_Subway, station_name, line, route1, .keep_all = TRUE) 
    dim(distinct_station)
-#
+# find out ADA compliant and the proportion 
 ADA_compliant = filter(distinct_station, ada == TRUE)
    dim(ADA_compliant)
 Without_vending = filter(distinct_station, vending == "NO", entry == TRUE)
@@ -40,11 +41,15 @@ Without_vending_no = filter(distinct_station, vending == "NO")
 There are totally 450 distinct stations both by name and by line. 
 There are totally 75 stations are ADA compliant. 
 The proportion is 5/9 = 55.6%
+
 ```{r}
+# use gather function to make route number and name to be distinct variables
 reformat_data = gather(NYC_Subway, key = route_number, value =route_name, route1:route11 )
+# use distinct to find unique stations serve A train 
    distinct_AA = distinct(reformat_data, station_name, line, route_name, .keep_all = TRUE) 
    distinct_A = filter(distinct_AA, route_name == "A")
    dim(distinct_A) 
+# filter out the non-ADA 
 ADA = filter(distinct_A, ada == TRUE)
    dim(ADA) 
 ```
