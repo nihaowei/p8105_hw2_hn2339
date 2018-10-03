@@ -62,12 +62,14 @@ library(readxl)
 Mr_TrashWheel = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", range = "A2:N258") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
+# round the sport_balls to nearest integer and convert 
   mutate(sports_balls = as.integer(round(sports_balls, 0)))
   Mr_2016 = filter(Mr_TrashWheel, year == 2016)
 ```
 
 ```{r}
 library(readxl)
+# use sheet command to specify the exact data set, cell color? 
 Precipation_2016 = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 4, range = "A2:B15") %>%
   janitor::clean_names() %>%
   filter(!is.na(total)) %>%
@@ -76,6 +78,7 @@ Precipation_2017 = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx
   janitor::clean_names() %>%
   filter(!is.na(total)) %>%
   mutate(Year = "2017")
+# bind the 2016 and 2017 data set together 
 Precipation = bind_rows(Precipation_2016, Precipation_2017) %>%
   mutate(month = month.name[month])
   P2017 = filter(Precipation, Year == 2017)
@@ -95,14 +98,16 @@ library(p8105.datasets)
     data(brfss_smart2010) 
     BRFSS = janitor::clean_names(brfss_smart2010) %>%
     filter(topic == "Overall Health") %>%
+# removed the unwanted columns 
     select(-c(class, topic, question, sample_size, confidence_limit_low:geo_location)) %>%
+# spread the response column into value 
     spread(key = response, value = data_value) 
     Scatter_plot = filter(BRFSS, locationdesc == "NY - New York Country" | locationdesc == "NY - Queens Country")
     destination = distinct(BRFSS, locationdesc, .keep_all = TRUE) 
     state = distinct(BRFSS, locationabbr, .keep_all = TRUE)
     most = tail(names(sort(table(BRFSS$locationabbr))), 1)
     Excellent_2002 = filter(BRFSS, year == "2002") %>%
-    # 
+    #create a new variable in the last column to present the proportion of excellent and very good 
     mutate(proportion = (Excellent + `Very good` ) / (Excellent + Fair + Good + Poor + `Very good`))
 #make the histogram 
     ggplot(Excellent_2002, aes(x = Excellent)) +
