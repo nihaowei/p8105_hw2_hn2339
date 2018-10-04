@@ -111,7 +111,7 @@ library(p8105.datasets)
     most = tail(names(sort(table(BRFSS$locationabbr))), 1)
     Excellent_2002 = filter(BRFSS, year == "2002") %>%
     #create a new variable in the last column to present the proportion of excellent and very good 
-    mutate(proportion = (Excellent + `Very good` ) / (Excellent + Fair + Good + Poor + `Very good`))
+    mutate(proportion = Excellent + `Very good`)
 #make the histogram 
     ggplot(Excellent_2002, aes(x = Excellent)) +
       geom_histogram(binwidth = 1)
