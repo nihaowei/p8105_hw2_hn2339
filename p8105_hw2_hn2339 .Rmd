@@ -59,7 +59,7 @@ There are 17 ADA compliant.
 #Question 2 
 ```{r}
 library(readxl)
-Mr_TrashWheel = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", range = "A2:N258") %>%
+Mr_TrashWheel = read_excel("data /HealthyHarborWaterWheelTotals2018-7-28.xlsx", range = "A2:N338") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
 # round the sport_balls to nearest integer and convert 
@@ -70,11 +70,11 @@ Mr_TrashWheel = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
 ```{r}
 library(readxl)
 # use sheet command to specify the exact data set, cell color? 
-Precipation_2016 = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 4, range = "A2:B15") %>%
+Precipation_2016 = read_excel("data /HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 4, range = "A2:B15") %>%
   janitor::clean_names() %>%
   filter(!is.na(total)) %>%
   mutate(Year = "2016")
-Precipation_2017 = read_excel("data /HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 3, range = "A2:B15") %>%
+Precipation_2017 = read_excel("data /HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 3, range = "A2:B15") %>%
   janitor::clean_names() %>%
   filter(!is.na(total)) %>%
   mutate(Year = "2017")
